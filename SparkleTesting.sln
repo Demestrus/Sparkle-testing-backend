@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleTesting.API", "SparkleTesting\SparkleTesting.API.csproj", "{36AC25AC-8A9E-4A46-A8AF-20A51279BD70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleTesting.Domain", "SparkleTesting.Domain\SparkleTesting.Domain.csproj", "{57E358E5-78EF-4B74-BC8A-338BD5C00283}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleTesting.Application", "SparkleTesting.Application\SparkleTesting.Application.csproj", "{3AEA4260-86D1-4524-8989-1A06177EC5A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleTesting.Infrastructure", "SparkleTesting.Infrastructure\SparkleTesting.Infrastructure.csproj", "{9B89EDD9-257C-442B-BDC7-F4B1B2F11E23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleTesting.Persistence", "SparkleTesting.Persistence\SparkleTesting.Persistence.csproj", "{A693E8D8-8BA7-4047-86B7-253F4B689ED5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36AC25AC-8A9E-4A46-A8AF-20A51279BD70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36AC25AC-8A9E-4A46-A8AF-20A51279BD70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36AC25AC-8A9E-4A46-A8AF-20A51279BD70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36AC25AC-8A9E-4A46-A8AF-20A51279BD70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E358E5-78EF-4B74-BC8A-338BD5C00283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E358E5-78EF-4B74-BC8A-338BD5C00283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E358E5-78EF-4B74-BC8A-338BD5C00283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E358E5-78EF-4B74-BC8A-338BD5C00283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AEA4260-86D1-4524-8989-1A06177EC5A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AEA4260-86D1-4524-8989-1A06177EC5A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AEA4260-86D1-4524-8989-1A06177EC5A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AEA4260-86D1-4524-8989-1A06177EC5A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B89EDD9-257C-442B-BDC7-F4B1B2F11E23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B89EDD9-257C-442B-BDC7-F4B1B2F11E23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B89EDD9-257C-442B-BDC7-F4B1B2F11E23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B89EDD9-257C-442B-BDC7-F4B1B2F11E23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A693E8D8-8BA7-4047-86B7-253F4B689ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A693E8D8-8BA7-4047-86B7-253F4B689ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A693E8D8-8BA7-4047-86B7-253F4B689ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A693E8D8-8BA7-4047-86B7-253F4B689ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D3BF3A7-E34B-4250-99EB-1B01EAA74CBB}
+	EndGlobalSection
+EndGlobal
