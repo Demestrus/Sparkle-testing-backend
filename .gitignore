@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/SparkleTesting/Views/Test/Index.cshtml
+/SparkleTesting/Controllers/TestController.cs
