@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /SparkleTesting/Views/Test/Index.cshtml
 /SparkleTesting/Controllers/TestController.cs
+SparkleTesting/sparkleauth-firebase-adminsdk.json
