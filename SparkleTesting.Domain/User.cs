@@ -5,6 +5,8 @@ namespace SparkleTesting.Domain
 {
     public class User : IdentityUser
     {
-        public string Pin { get; set; }
+        public User()
+        {
+        }
     }
 }

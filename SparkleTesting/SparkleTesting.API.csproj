@@ -6,14 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="sparkleauth-firebase-adminsdk.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="FirebaseAdmin" Version="1.2.1" />
+    <PackageReference Include="FirebaseAdmin" Version="1.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SparkleTesting.Application\SparkleTesting.Application.csproj" />
+    <ProjectReference Include="..\SparkleTesting.Persistence\SparkleTesting.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
