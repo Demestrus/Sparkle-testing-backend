@@ -1,6 +1,7 @@
 ﻿using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace SparkleTesting
 {
@@ -47,65 +49,45 @@ namespace SparkleTesting
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(opt => {
-                opt.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateLifetime = false,
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
-                    ValidateIssuerSigningKey = false,
-                    ValidateTokenReplay = false,
-                    ValidateActor = false,
-                    //ValidIssuer = Configuration["Jwt:Issuer"],
-                    //ValidAudience = Configuration["Jwt:Audience"],
-                    TokenReader = (token, param) =>
-                    {
-                        var decodedToken = FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token).Result;
-
-                        return new JwtSecurityToken(
-                        claims: decodedToken.Claims.Select(c => new Claim(c.Key, c.Value.ToString()))
-                        );
-                    },
-                    SignatureValidator = (token, param) =>
-                    {
-                        var decodedToken = FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token).Result;
-
-                        return new JwtSecurityToken(
-                        issuer: decodedToken.Issuer,
-                        audience: decodedToken.Audience,
-                        claims: decodedToken.Claims.Select(c => new Claim(c.Key, c.Value.ToString())),
-                        expires: DateTime.Now.AddTicks(decodedToken.ExpirationTimeSeconds
-                        );
-                    },
-                    TokenReplayValidator = (date, token, param) =>
-                    {
-                        return true;
-                    }
-                    //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                };
                 opt.Events = new JwtBearerEvents
                 {
-                    //OnMessageReceived = async context =>
-                    //{
-                    //    var token = context.Token;
-                    //    if (token != null)
-                    //    {
-                    //        var decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token);
+                    OnMessageReceived = async context =>
+                    {
+                        var authorization = context.Request.Headers["Authorization"].ToString();
 
-                    //    }
+                        if (string.IsNullOrEmpty(authorization))
+                        {
+                            context.NoResult();
+                            return;
+                        }
 
-                    //    return Task.CompletedTask;
-                    //},
-                    OnChallenge = async context =>
-                    {
-                        var test = 1;
+                        if (authorization.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var token = authorization.Substring("Bearer ".Length).Trim();
+
+                            if (string.IsNullOrEmpty(token))
+                            {
+                                context.NoResult();
+                                return;
+                            }
+
+                            var decodedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token);
+
+                            context.Principal = new ClaimsPrincipal(
+                                new ClaimsIdentity(
+                                    decodedToken.Claims.Select(c => new Claim(c.Key, c.Value.ToString())), 
+                                    JwtBearerDefaults.AuthenticationScheme
+                                ));
+
+                            context.Success();
+                        }
+
+                        return;
                     },
-                    OnTokenValidated = async context =>
+                    OnAuthenticationFailed = context =>
                     {
-                        var test = 1;
-                    },
-                    OnAuthenticationFailed = async context =>
-                    {
-                        var test = 1;
+                        //TODO ловить исключения туть
+                        return Task.FromException(context.Exception);
                     }
                 };
             });
