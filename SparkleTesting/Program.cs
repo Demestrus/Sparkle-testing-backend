@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using SparkleTesting.Persistence;
 
-namespace SparkleTesting
+namespace SparkleTesting.API
 {
     public class Program
     {

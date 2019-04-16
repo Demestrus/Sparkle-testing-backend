@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SparkleTesting.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -16,6 +16,11 @@ namespace SparkleTesting.API.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Регистрация пользователя в системе по Firebase-токену 
+        /// </summary>
+        /// <param name="token">Firebase-токен</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("register")]
         public async Task Register(string token)
@@ -24,12 +29,24 @@ namespace SparkleTesting.API.Controllers
             await _service.RegisterIfNotExists(decoded.Uid);
         }
 
-        [HttpPost]
-        [Route("register2")]
+        /// <summary>
+        /// Тестирование авторизованного запроса с подложенным в хедер Authorization токеном
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("authTest")]
         [Authorize]
-        public async Task Register2()
+        public TestObj AuthTest()
         {
-            var user = User;
+            return new TestObj
+            {
+                Test = "Hello authorized world!"
+            };
+        }
+
+        public class TestObj
+        {
+            public string Test { get; set; }
         }
     }
 }

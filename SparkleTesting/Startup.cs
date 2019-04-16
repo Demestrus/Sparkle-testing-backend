@@ -1,26 +1,27 @@
 ﻿using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using SparkleTesting.Application.Services;
 using SparkleTesting.Domain;
 using SparkleTesting.Persistence;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace SparkleTesting
+namespace SparkleTesting.API
 {
     public class Startup
     {
@@ -92,11 +93,53 @@ namespace SparkleTesting
                 };
             });
 
+            services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+
+            services.AddVersionedApiExplorer(
+                options =>
+                {
+                    options.GroupNameFormat = "'v'VVV";
+
+                    options.SubstituteApiVersionInUrl = true;
+                });
+
+
+            services.AddSwaggerGen(
+                options =>
+                {
+                    var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
+
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerDoc(description.GroupName, new Info()
+                        {
+                            Title =
+                                $"{GetType().Assembly.GetCustomAttribute<System.Reflection.AssemblyProductAttribute>().Product}",
+                            Version = description.ApiVersion.ToString(),
+                            Description = description.IsDeprecated ? "DEPRECATED" : ""
+
+                        });
+                    }
+
+                    options.OperationFilter<SwaggerDefaultValues>();
+
+                    options.IncludeXmlComments(Path.Combine(
+                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                        $"{GetType().Assembly.GetName().Name}.xml"
+                    ));
+
+                });
+
             services.AddScoped<UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -113,7 +156,22 @@ namespace SparkleTesting
                 Credential = GoogleCredential.GetApplicationDefault()
             });
 
+
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(
+            options =>
+            {
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    var alias = string.IsNullOrWhiteSpace(Configuration["Swagger:Alias"]) ? "" : $"/{Configuration["Swagger:Alias"]}";
+
+                    options.SwaggerEndpoint($"{alias}/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+                }
+            });
+
             app.UseAuthentication();
             app.UseMvc();
         }
