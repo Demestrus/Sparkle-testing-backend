@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SparkleTesting.Application.Services;
-using SparkleTesting.Domain;
+using SparkleTesting.Domain.Entities;
 using SparkleTesting.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
 using System;

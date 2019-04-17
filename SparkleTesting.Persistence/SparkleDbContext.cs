@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SparkleTesting.Domain;
+using SparkleTesting.Domain.Entities;
 using System;
 
 namespace SparkleTesting.Persistence
 {
     public class SparkleDbContext : IdentityDbContext<User>
     {
+        public DbSet<Test> Test { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Option> Options { get; set; }
+        public DbSet<TestMark> TestMarks { get; set; }
+
         public SparkleDbContext(DbContextOptions<SparkleDbContext> options)
             : base(options)
         {
@@ -25,6 +30,15 @@ namespace SparkleTesting.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OptionsQuestion>();
+
+            modelBuilder.Entity<ShortAnswerQuestion>()
+                .Property<string>("AnswerStrings")
+                .HasField("_answerStrings");
+
+            modelBuilder.Entity<ShortAnswerQuestion>()
+                .Ignore(s => s.CorrectAnswers);
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -14,14 +14,7 @@ namespace SparkleTesting.Persistence
 
         public Task Initialize()
         {
-            try
-            {
-                _db.Database.Migrate();
-            }
-            catch (Exception ex)
-            {
-
-            }
+            _db.Database.Migrate();
 
             return Task.CompletedTask;
         }

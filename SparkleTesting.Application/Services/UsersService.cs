@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using MoreLinq;
-using SparkleTesting.Domain;
+using SparkleTesting.Domain.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
