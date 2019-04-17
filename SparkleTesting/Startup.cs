@@ -15,6 +15,7 @@ using SparkleTesting.Domain;
 using SparkleTesting.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -37,6 +38,14 @@ namespace SparkleTesting.API
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddCors(b => b.AddPolicy("CorsPolicy", builder =>
+              {
+                  builder.SetIsOriginAllowed(s => true);
+                  builder.AllowAnyHeader();
+                  builder.AllowCredentials();
+                  builder.AllowAnyMethod();
+              }));
+
             services.AddDbContext<SparkleDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString(("Default")), 
                 b => b.MigrationsAssembly("SparkleTesting.Persistence")));
 
@@ -48,6 +57,7 @@ namespace SparkleTesting.API
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(opt => {
                 opt.Events = new JwtBearerEvents
@@ -133,6 +143,19 @@ namespace SparkleTesting.API
                         $"{GetType().Assembly.GetName().Name}.xml"
                     ));
 
+                    options.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                    {
+                        In = "header",
+                        Description = "Введите в поле JWT токен с припиской Bearer",
+                        Name = "Authorization",
+                        Type = "apiKey"
+                    });
+
+                    options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
+                    {
+                       { "Bearer", new string[] { } }
+                    });
+
                 });
 
             services.AddScoped<UsersService>();
@@ -156,6 +179,7 @@ namespace SparkleTesting.API
                 Credential = GoogleCredential.GetApplicationDefault()
             });
 
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 

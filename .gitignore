@@ -263,3 +263,4 @@ __pycache__/
 /SparkleTesting/Controllers/TestController.cs
 SparkleTesting/sparkleauth-firebase-adminsdk.json
 /FirebaseSecrets
+/SparkleTesting/Properties/PublishProfiles/FolderProfile.pubxml
