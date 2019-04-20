@@ -1,4 +1,6 @@
-﻿namespace SparkleTesting.API.Models.Dto
+﻿using Newtonsoft.Json;
+
+namespace SparkleTesting.API.Models.Dto
 {
     /// <summary>
     /// Тест
@@ -6,23 +8,26 @@
     public class TestDto
     {
         /// <summary>
-        /// Идентификатор теста
+        /// Идентификатор попытки
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
         /// Название теста
         /// </summary>
-        public string Name { get; set; }
+        [JsonProperty("name")]
+        public string TestName { get; set; }
 
         /// <summary>
         /// Находится ли тест в состоянии выполнения (пока нереализовано)
         /// </summary>
-        public bool InProgress { get; set; }
+        [JsonProperty("inProgress")]
+        public bool TestInProgress { get; set; }
 
         /// <summary>
         /// Время на попытку прохождения
         /// </summary>
-        public string AttemptTime { get; set; }
+        [JsonProperty("attemptTime")]
+        public string TestAttemptTime { get; set; }
     }
 }

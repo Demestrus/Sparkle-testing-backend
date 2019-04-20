@@ -15,12 +15,35 @@ namespace SparkleTesting.Domain.Entities
 
         public Attempt Attempt { get; set; }
 
+        protected Answer()
+        {
+
+        }
+        protected Answer(Question question)
+        {
+            QuestionId = question.Id;
+            QuestionText = question.Text;
+            QuestionPoints = question.Points;
+        }
         public abstract bool IsCorrect();
+
     }
 
     public class OptionsAnswer : Answer
     {
         public ICollection<AnswerOption> Options { get; set; } = new HashSet<AnswerOption>();
+
+        public OptionsAnswer()
+        {
+
+        }
+        public OptionsAnswer(OptionsQuestion question) : base(question)
+        {
+            foreach (var option in question.Options)
+            {
+                Options.Add(new AnswerOption(option));
+            }
+        }
 
         public override bool IsCorrect()
         {
@@ -31,6 +54,17 @@ namespace SparkleTesting.Domain.Entities
     public class PassFillingAnswer : Answer
     {
         public ICollection<FilledPass> FilledPasses { get; set; } = new HashSet<FilledPass>();
+
+        public PassFillingAnswer()
+        {
+        }
+        public PassFillingAnswer(PassFillingQuestion question) : base(question)
+        {
+            foreach (var pass in question.Passes)
+            {
+                FilledPasses.Add(new FilledPass(pass));
+            }
+        }
 
         public override bool IsCorrect()
         {

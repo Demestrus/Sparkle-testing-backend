@@ -10,6 +10,6 @@ namespace SparkleTesting.Domain.Entities
         public bool IsCorrect { get; set; }
         public bool IsDeleted { get; set ; }
 
-        public Question Question { get; set; }
+        public OptionsQuestion Question { get; set; }
     }
 }

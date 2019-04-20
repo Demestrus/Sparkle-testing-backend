@@ -10,5 +10,16 @@
         public bool IsChoosen { get; set; }
 
         public OptionsAnswer Answer { get; set; }
+
+        public AnswerOption()
+        {
+
+        }
+        public AnswerOption(Option option)
+        {
+            OptionId = option.Id;
+            OptionText = option.Text;
+            IsCorrect = option.IsCorrect;
+        }
     }
 }

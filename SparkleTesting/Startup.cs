@@ -1,4 +1,5 @@
-﻿using FirebaseAdmin;
+﻿using AutoMapper;
+using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,9 +22,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AutoMapper;
-using AutoMapper.Mappers;
-using AutoMapper.Configuration.Conventions;
 
 namespace SparkleTesting.API
 {
@@ -90,7 +88,7 @@ namespace SparkleTesting.API
                             context.Principal = new ClaimsPrincipal(
                                 new ClaimsIdentity(
                                     decodedToken.Claims.Select(c => new Claim(c.Key, c.Value.ToString()))
-                                    .Append(new Claim(ClaimsIdentity.DefaultNameClaimType, decodedToken.Uid)), 
+                                    .Append(new Claim(ClaimsIdentity.DefaultNameClaimType,  decodedToken.Uid)), 
                                     JwtBearerDefaults.AuthenticationScheme
                                 ));
 
@@ -165,6 +163,7 @@ namespace SparkleTesting.API
             services.AddAutoMapper();
 
             services.AddScoped<UsersService>();
+            services.AddScoped<AttemptsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

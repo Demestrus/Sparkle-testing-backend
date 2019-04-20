@@ -12,5 +12,15 @@ namespace SparkleTesting.Domain.Entities
         public string UserAnswer { get; set; }
 
         public int SortOrder { get; set; }
+
+        public FilledPass()
+        {
+
+        }
+        public FilledPass(PassFilling pass)
+        {
+            CorrectAnswers = pass.CorrectAnswers;
+            SortOrder = pass.SortOrder;
+        }
     }
 }

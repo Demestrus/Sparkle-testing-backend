@@ -24,19 +24,33 @@ namespace SparkleTesting.Application.Services
             _db = db;
         }
 
-        public async Task RegisterIfNotExists(string uid)
+        public async Task RegisterIfNotExists(string uid, string phoneNumber = null, string email = null)
         {
             var user = await _userManager.FindByIdAsync(uid);
 
             if (user != null)
             {
+                if (!string.IsNullOrWhiteSpace(phoneNumber))
+                {
+                    user.PhoneNumber = phoneNumber;
+                    await _db.SaveChangesAsync();
+                }
+
+                if (!string.IsNullOrWhiteSpace(email))
+                {
+                    user.Email = email;
+                    await _db.SaveChangesAsync();
+                }
+
                 return;
             }
 
             user = new User()
             {
                 Id = uid,
-                UserName = uid //TODO подумать над тем, чтобы брать более осмысленные данные
+                UserName = uid,
+                PhoneNumber = phoneNumber ?? null,
+                Email = email ?? null
             };
 
             var result = await _userManager.CreateAsync(user);
@@ -48,7 +62,7 @@ namespace SparkleTesting.Application.Services
             }
         }
 
-        private async Task<User> GetUser(string id)
+        public async Task<User> GetUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user == null)
@@ -59,7 +73,7 @@ namespace SparkleTesting.Application.Services
             return user;
         }
 
-        private async Task<User> GetCurrentUser()
+        public async Task<User> GetCurrentUser()
         {
             if (!_context.HttpContext.User.Identity.IsAuthenticated)
             {

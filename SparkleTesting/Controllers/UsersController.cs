@@ -31,7 +31,12 @@ namespace SparkleTesting.API.Controllers
         public async Task Register(string token)
         {
             var decoded = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token);
-            await _service.RegisterIfNotExists(decoded.Uid);
+
+            decoded.Claims.TryGetValue("phone_number", out var phoneNumber);
+
+            decoded.Claims.TryGetValue("email", out var email);
+
+            await _service.RegisterIfNotExists(decoded.Uid, phoneNumber?.ToString(), email?.ToString());
         }
 
         /// <summary>
