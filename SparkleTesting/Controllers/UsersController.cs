@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SparkleTesting.API.Models.Dto;
 using SparkleTesting.Application.Services;
 using System.Threading.Tasks;
 
@@ -30,23 +31,34 @@ namespace SparkleTesting.API.Controllers
         }
 
         /// <summary>
-        /// Тестирование авторизованного запроса с подложенным в хедер Authorization токеном
+        /// Получение профиля текущего пользователя
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("authTest")]
+        [Route("profile")]
         [Authorize]
-        public TestObj AuthTest()
+        public UserProfileDto GetProfile()
         {
-            return new TestObj
+            return new UserProfileDto
             {
-                Test = "Hello authorized world!"
+                Surname = "Иванов",
+                Name = "Иван",
+                Patronymic = "Иванович",
+                StudyYear = "365 год"
             };
         }
 
-        public class TestObj
+        /// <summary>
+        /// Изменение профиля текущего пользователя
+        /// </summary>
+        /// <param name="profile">Измененный профиль</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("profile")]
+        [Authorize]
+        public ActionResult<UserProfileDto> ChangeProfile([FromBody] UserProfileDto profile)
         {
-            public string Test { get; set; }
+            return profile;
         }
     }
 }
