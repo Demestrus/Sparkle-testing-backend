@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SparkleTesting.API.Models.Dto;
+using SparkleTesting.Application.Models;
 using SparkleTesting.Application.Services;
 using System.Threading.Tasks;
 
@@ -11,10 +13,12 @@ namespace SparkleTesting.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly UsersService _service;
+        private readonly IMapper _mapper;
 
-        public UsersController(UsersService service)
+        public UsersController(UsersService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -37,28 +41,28 @@ namespace SparkleTesting.API.Controllers
         [HttpGet]
         [Route("profile")]
         [Authorize]
-        public UserProfileDto GetProfile()
+        public async Task<UserProfileDto> GetProfile()
         {
-            return new UserProfileDto
-            {
-                Surname = "Иванов",
-                Name = "Иван",
-                Patronymic = "Иванович",
-                StudyYear = "365 год"
-            };
+            var profile = await _service.GetCurrentUserProfile();
+
+            return _mapper.Map<UserProfileDto>(profile);
         }
 
         /// <summary>
         /// Изменение профиля текущего пользователя
         /// </summary>
-        /// <param name="profile">Измененный профиль</param>
+        /// <param name="profileDto">Измененный профиль</param>
         /// <returns></returns>
         [HttpPut]
         [Route("profile")]
         [Authorize]
-        public ActionResult<UserProfileDto> ChangeProfile([FromBody] UserProfileDto profile)
+        public async Task<UserProfileDto> ChangeProfile([FromBody] UserProfileDto profileDto)
         {
-            return profile;
+            var profile = _mapper.Map<UserProfile>(profileDto);
+
+            profile = await _service.ChangeCurrentUserProfile(profile);
+
+            return _mapper.Map<UserProfileDto>(profile);
         }
     }
 }

@@ -21,6 +21,9 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.Mappers;
+using AutoMapper.Configuration.Conventions;
 
 namespace SparkleTesting.API
 {
@@ -86,7 +89,8 @@ namespace SparkleTesting.API
 
                             context.Principal = new ClaimsPrincipal(
                                 new ClaimsIdentity(
-                                    decodedToken.Claims.Select(c => new Claim(c.Key, c.Value.ToString())), 
+                                    decodedToken.Claims.Select(c => new Claim(c.Key, c.Value.ToString()))
+                                    .Append(new Claim(ClaimsIdentity.DefaultNameClaimType, decodedToken.Uid)), 
                                     JwtBearerDefaults.AuthenticationScheme
                                 ));
 
@@ -157,6 +161,8 @@ namespace SparkleTesting.API
                     });
 
                 });
+
+            services.AddAutoMapper();
 
             services.AddScoped<UsersService>();
         }

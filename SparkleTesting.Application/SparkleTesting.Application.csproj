@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SparkleTesting.Domain\SparkleTesting.Domain.csproj" />
+    <ProjectReference Include="..\SparkleTesting.Persistence\SparkleTesting.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
