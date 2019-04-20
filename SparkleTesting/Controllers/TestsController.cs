@@ -88,7 +88,8 @@ namespace SparkleTesting.API.Controllers
                                 Id = 3,
                                 Text = "Третий вариант"
                             },
-                        }
+                        },
+                        PassesIds = new List<int>()
                     },
                     new QuestionDto
                     {
@@ -112,14 +113,36 @@ namespace SparkleTesting.API.Controllers
                                 Id = 6,
                                 Text = "Третий вариант"
                             },
-                        }
+                        },
+                        PassesIds = new List<int>()
                     },
                     new QuestionDto
                     {
                         Id = 3,
                         Text = "Текст вопроса. Заполните пропуск/дайте краткий ответ.",
                         QuestionType = QuestionType.ShortAnswers,
-                        Options = new List<OptionDto>()
+                        Options = new List<OptionDto>(),
+                        PassesIds = new List<int>()
+                        {
+                            1, 2, 3
+                        }
+                    },
+                    new QuestionDto
+                    {
+                        Id = 4,
+                        Text = "# Dillinger \n" +
+                        " [![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid) \n" +
+                        " [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger) \n" +
+                        " Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor. \n" +
+                        " - Type some Markdown on the left \n" +
+                        " - See HTML in the right \n" +
+                        " - Magic",
+                        QuestionType = QuestionType.ShortAnswers,
+                        Options = new List<OptionDto>(),
+                        PassesIds = new List<int>()
+                        {
+                            4, 5, 6
+                        }
                     }
                 }
             };

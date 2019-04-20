@@ -10,5 +10,6 @@ namespace SparkleTesting.Domain.Entities
         private string _answerStrings = string.Empty;
         public ICollection<string> CorrectAnswers { get => _answerStrings.Split("/;"); set => _answerStrings = value.ToDelimitedString("/;"); }
 
+        public int SortOrder { get; set; }
     }
 }

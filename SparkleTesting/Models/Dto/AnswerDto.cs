@@ -20,8 +20,8 @@ namespace SparkleTesting.API.Models.Dto
         public ICollection<int> SelectedOptions { get; set; }
 
         /// <summary>
-        /// Краткий ответ на вопрос
+        /// Список заполненных пропусков
         /// </summary>
-        public string Answer { get; set; }
+        public ICollection<PassFillDto> Answers { get; set; }
     }
 }

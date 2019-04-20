@@ -22,7 +22,7 @@ namespace SparkleTesting.API.Models.Dto
         /// Тип вопроса:
         /// 1 - выбор одного ответа
         /// 2 - выбор нескольких ответов
-        /// 3 - краткий ответ
+        /// 3 - заполнить пропуски
         /// </summary>
         public QuestionType QuestionType { get; set; }
 
@@ -30,5 +30,10 @@ namespace SparkleTesting.API.Models.Dto
         /// Варианты ответа для типов 1 и 2
         /// </summary>
         public ICollection<OptionDto> Options { get; set; }
+
+        /// <summary>
+        /// Идентификаторы полей для заполнения пропусков для типа 3
+        /// </summary>
+        public ICollection<int> PassesIds { get; set; }
     }
 }
