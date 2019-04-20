@@ -30,8 +30,9 @@ namespace SparkleTesting.Application.Services
             var user = await _usersService.GetCurrentUser();
 
             var attempts = QuerryAttempts()
-                .Include(s=>s.Test)
-                .Where(s => s.UserId == user.Id || s.Assigned == user.PhoneNumber || s.Assigned == user.Email);
+                .Include(s => s.Test)
+                .Where(s => s.UserId == user.Id || s.Assigned == user.PhoneNumber || s.Assigned == user.Email)
+                .Where(s => !s.StartTime.HasValue);
 
             return attempts;
         }
