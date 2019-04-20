@@ -13,7 +13,7 @@ namespace SparkleTesting.Domain.Entities
         public DateTime CreateDate { get ; set ; }
         public bool IsDeleted { get; set; }
 
-        public ICollection<TestMark> Marks { get; set; }
-        public ICollection<Question> Questions { get; set; }
+        public ICollection<TestMark> Marks { get; set; } = new HashSet<TestMark>();
+        public ICollection<Question> Questions { get; set; } = new HashSet<Question>();
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SparkleTesting.Persistence;
 
 namespace SparkleTesting.Persistence.Migrations
 {
     [DbContext(typeof(SparkleDbContext))]
-    partial class SparkleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190420090210_TestAttempts")]
+    partial class TestAttempts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

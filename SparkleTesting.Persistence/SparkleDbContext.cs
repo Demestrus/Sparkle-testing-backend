@@ -12,6 +12,9 @@ namespace SparkleTesting.Persistence
         public DbSet<Question> Questions { get; set; }
         public DbSet<Option> Options { get; set; }
         public DbSet<TestMark> TestMarks { get; set; }
+        public DbSet<Attempt> Attempts { get; set; }
+        public DbSet<Answer> Answers { get; set; }
+        public DbSet<AnswerOption> AnswerOptions { get; set; }
 
         public SparkleDbContext(DbContextOptions<SparkleDbContext> options)
             : base(options)
@@ -38,6 +41,21 @@ namespace SparkleTesting.Persistence
 
             modelBuilder.Entity<ShortAnswerQuestion>()
                 .Ignore(s => s.CorrectAnswers);
+
+            modelBuilder.Entity<ShortAnswer>()
+                .Property<string>("AnswerStrings")
+                .HasField("_answerStrings");
+
+            modelBuilder.Entity<ShortAnswer>()
+               .Ignore(s => s.CorrectAnswers);
+
+            modelBuilder.Entity<Answer>()
+                .HasIndex(s => new { s.AttemptId, s.QuestionId })
+                .IsUnique();
+
+            modelBuilder.Entity<AnswerOption>()
+                .HasIndex(s => new { s.AnswerId, s.OptionId })
+                .IsUnique();
 
             base.OnModelCreating(modelBuilder);
         }

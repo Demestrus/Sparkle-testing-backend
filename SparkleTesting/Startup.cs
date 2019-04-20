@@ -97,8 +97,8 @@ namespace SparkleTesting.API
                     },
                     OnAuthenticationFailed = context =>
                     {
-                        //TODO ловить исключения туть
-                        return Task.FromException(context.Exception);
+                        context.Fail(context.Exception);
+                        return Task.CompletedTask;
                     }
                 };
             });
@@ -164,6 +164,8 @@ namespace SparkleTesting.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
+            app.UseCors("CorsPolicy");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -178,8 +180,6 @@ namespace SparkleTesting.API
             {
                 Credential = GoogleCredential.GetApplicationDefault()
             });
-
-            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 

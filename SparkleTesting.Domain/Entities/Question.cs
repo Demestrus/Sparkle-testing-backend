@@ -23,12 +23,12 @@ namespace SparkleTesting.Domain.Entities
     {
         public OptionQuestionType Type { get; set; }
 
-        public ICollection<Option> Options { get; set; }
+        public ICollection<Option> Options { get; set; } = new HashSet<Option>();
     }
 
     public class ShortAnswerQuestion : Question
     {
-        private string _answerStrings;
+        private string _answerStrings = string.Empty;
         public ICollection<string> CorrectAnswers { get => _answerStrings.Split("/;"); set => _answerStrings = value.ToDelimitedString("/;"); }
     }
 
