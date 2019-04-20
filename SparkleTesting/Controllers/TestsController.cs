@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SparkleTesting.API.Models.Dto;
-using SparkleTesting.API.Models.Enums;
 using SparkleTesting.Application.Models;
 using SparkleTesting.Application.Services;
 using System.Collections.Generic;

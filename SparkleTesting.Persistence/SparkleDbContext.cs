@@ -2,7 +2,11 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SparkleTesting.Domain.Entities;
+using SparkleTesting.Domain.Interfaces;
 using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SparkleTesting.Persistence
 {
@@ -64,6 +68,32 @@ namespace SparkleTesting.Persistence
                 .IsUnique();
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void PreProcessing()
+        {
+            foreach (var entry in ChangeTracker.Entries<IAuditableEntity>().Where(s=>s.State == EntityState.Added))
+            {
+                entry.Entity.CreateDate = DateTime.UtcNow;
+            }
+
+            foreach (var entry in ChangeTracker.Entries<ISoftDelete>().Where(s => s.State == EntityState.Deleted))
+            {
+                entry.Entity.IsDeleted = true;
+                entry.State = EntityState.Modified;
+            }
+        }
+
+        public override int SaveChanges()
+        {
+            PreProcessing();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken token = default)
+        {
+            PreProcessing();
+            return await base.SaveChangesAsync(token);
         }
     }
 }

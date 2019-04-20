@@ -2,7 +2,7 @@
 
 namespace SparkleTesting.Domain.Interfaces
 {
-    interface IAuditableEntity
+    public interface IAuditableEntity
     {
         DateTime CreateDate { get; set; }
     }

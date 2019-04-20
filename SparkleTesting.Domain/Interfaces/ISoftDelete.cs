@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SparkleTesting.Domain.Interfaces
 {
-    interface ISoftDelete
+    public interface ISoftDelete
     {
         bool IsDeleted { get; set; }
     }

@@ -15,5 +15,6 @@ namespace SparkleTesting.Domain.Entities
 
         public ICollection<TestMark> Marks { get; set; } = new HashSet<TestMark>();
         public ICollection<Question> Questions { get; set; } = new HashSet<Question>();
+        public ICollection<Attempt> Attempts { get; set; } = new HashSet<Attempt>();
     }
 }
