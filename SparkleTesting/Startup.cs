@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using SparkleTesting.API.Middleware;
 using SparkleTesting.Application.Services;
 using SparkleTesting.Domain.Entities;
 using SparkleTesting.Persistence;
@@ -162,6 +164,8 @@ namespace SparkleTesting.API
 
             services.AddAutoMapper();
 
+            services.AddSingleton(Log.Logger);
+
             services.AddScoped<UsersService>();
             services.AddScoped<AttemptsService>();
         }
@@ -187,6 +191,8 @@ namespace SparkleTesting.API
             });
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<ExceptionHandling>();
 
             app.UseSwagger();
 
