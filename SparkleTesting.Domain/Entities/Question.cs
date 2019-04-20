@@ -26,10 +26,9 @@ namespace SparkleTesting.Domain.Entities
         public ICollection<Option> Options { get; set; } = new HashSet<Option>();
     }
 
-    public class ShortAnswerQuestion : Question
+    public class PassFillingQuestion : Question
     {
-        private string _answerStrings = string.Empty;
-        public ICollection<string> CorrectAnswers { get => _answerStrings.Split("/;"); set => _answerStrings = value.ToDelimitedString("/;"); }
+        public ICollection<PassFilling> Passes { get; set; } = new HashSet<PassFilling>();
     }
 
 }

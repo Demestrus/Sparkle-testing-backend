@@ -35,18 +35,24 @@ namespace SparkleTesting.Persistence
         {
             modelBuilder.Entity<OptionsQuestion>();
 
-            modelBuilder.Entity<ShortAnswerQuestion>()
+            modelBuilder.Entity<PassFillingQuestion>();
+
+            modelBuilder.Entity<OptionsAnswer>();
+
+            modelBuilder.Entity<PassFillingAnswer>();
+
+            modelBuilder.Entity<PassFilling>()
                 .Property<string>("AnswerStrings")
                 .HasField("_answerStrings");
 
-            modelBuilder.Entity<ShortAnswerQuestion>()
+            modelBuilder.Entity<PassFilling>()
                 .Ignore(s => s.CorrectAnswers);
 
-            modelBuilder.Entity<ShortAnswer>()
+            modelBuilder.Entity<FilledPass>()
                 .Property<string>("AnswerStrings")
                 .HasField("_answerStrings");
 
-            modelBuilder.Entity<ShortAnswer>()
+            modelBuilder.Entity<FilledPass>()
                .Ignore(s => s.CorrectAnswers);
 
             modelBuilder.Entity<Answer>()

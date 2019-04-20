@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SparkleTesting.Domain.Entities
+﻿namespace SparkleTesting.Domain.Entities
 {
     public class AnswerOption
     {
@@ -13,6 +9,6 @@ namespace SparkleTesting.Domain.Entities
         public bool IsCorrect { get; set; }
         public bool IsChoosen { get; set; }
 
-        public Answer Answer { get; set; }
+        public OptionsAnswer Answer { get; set; }
     }
 }

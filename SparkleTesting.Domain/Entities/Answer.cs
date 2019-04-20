@@ -28,16 +28,13 @@ namespace SparkleTesting.Domain.Entities
         }
     }
 
-    public class ShortAnswer : Answer
+    public class PassFillingAnswer : Answer
     {
-        private string _answerStrings = string.Empty;
-        public ICollection<string> CorrectAnswers { get => _answerStrings.Split("/;"); set => _answerStrings = value.ToDelimitedString("/;"); }
-
-        public string UserAnswer { get; set; }
+        public ICollection<FilledPass> FilledPasses { get; set; } = new HashSet<FilledPass>();
 
         public override bool IsCorrect()
         {
-            return CorrectAnswers.Select(s=>s.Trim().ToLower()).Contains(UserAnswer.Trim().ToLower());
+            return FilledPasses.All(s => s.CorrectAnswers.Select(a => a.Trim().ToLower()).Contains(s.UserAnswer.Trim().ToLower()));
         }
     }
 }
