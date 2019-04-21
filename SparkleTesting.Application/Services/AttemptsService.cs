@@ -126,7 +126,7 @@ namespace SparkleTesting.Application.Services
                     case PassFillingAnswer passFillAsnwer:
                         passFillAsnwer.FilledPasses.AsParallel().ForAll(pass =>
                         {
-                            if (answer.Answers.TryGetValue(pass.Id, out var text) && !string.IsNullOrEmpty(text))
+                            if (answer.Answers.TryGetValue(pass.PassFillingId, out var text) && !string.IsNullOrEmpty(text))
                             {
                                 pass.UserAnswer = text;
                             }
@@ -169,12 +169,14 @@ namespace SparkleTesting.Application.Services
                 .ThenInclude(s => (s as PassFillingQuestion).Passes)
                 .LoadAsync();
 
+            var rnd = new Random();
+
             var userAttempt = new UserAttempt()
             {
                 Id = attempt.Id,
                 TestName = attempt.Test.Name,
                 MaxTime = attempt.Test.AttemptTime,
-                Questions = attempt.Test.Questions.OrderBy(s=>s.SortOrder).ToList()
+                Questions = attempt.Test.Questions.OrderBy(s=> rnd.Next()).ToList()
             };
 
             return userAttempt;

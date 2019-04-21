@@ -10,7 +10,7 @@ namespace SparkleTesting.Domain.Entities
         private string _answerStrings = string.Empty;
         public ICollection<string> CorrectAnswers { get => _answerStrings.Split("/;"); set => _answerStrings = value.ToDelimitedString("/;"); }
         public string UserAnswer { get; set; } = string.Empty;
-
+        public int PassFillingId { get; set; }
         public int SortOrder { get; set; }
 
         public FilledPass()
@@ -21,6 +21,7 @@ namespace SparkleTesting.Domain.Entities
         {
             CorrectAnswers = pass.CorrectAnswers;
             SortOrder = pass.SortOrder;
+            PassFillingId = pass.Id;
         }
     }
 }
