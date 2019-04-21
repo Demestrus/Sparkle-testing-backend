@@ -179,20 +179,20 @@ namespace SparkleTesting.Persistence
         {
             test.Marks.Add(new TestMark
             {
-                Name = "Тест не сдан",
+                Name = "Низкий уровень освоения программы",
                 PointsThreshold = 0,
             });
 
             test.Marks.Add(new TestMark
             {
                 Name = "Средний уровень освоения программы",
-                PointsThreshold = 1,
+                PointsThreshold = 11,
             });
 
             test.Marks.Add(new TestMark
             {
                 Name = "Высокий уровень освоения программы",
-                PointsThreshold = 2,
+                PointsThreshold = 15,
             });
         }
 
@@ -956,20 +956,20 @@ namespace SparkleTesting.Persistence
         {
             test.Marks.Add(new TestMark
             {
-                Name = "Тест не сдан",
+                Name = "Низкий уровень освоения программы",
                 PointsThreshold = 0,
             });
 
             test.Marks.Add(new TestMark
             {
                 Name = "Средний уровень освоения программы",
-                PointsThreshold = 1,
+                PointsThreshold = 11,
             });
 
             test.Marks.Add(new TestMark
             {
                 Name = "Высокий уровень освоения программы",
-                PointsThreshold = 2,
+                PointsThreshold = 15,
             });
         }
 
@@ -1704,20 +1704,20 @@ namespace SparkleTesting.Persistence
         {
             test.Marks.Add(new TestMark
             {
-                Name = "Тест не сдан",
+                Name = "Низкий уровень освоения программы",
                 PointsThreshold = 0,
             });
 
             test.Marks.Add(new TestMark
             {
                 Name = "Средний уровень освоения программы",
-                PointsThreshold = 1,
+                PointsThreshold = 11,
             });
 
             test.Marks.Add(new TestMark
             {
                 Name = "Высокий уровень освоения программы",
-                PointsThreshold = 2,
+                PointsThreshold = 15,
             });
         }
         private Question Create2Course1Question()
