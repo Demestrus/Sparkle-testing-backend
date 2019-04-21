@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SparkleTesting.Domain.Entities.Test>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <table>
+        @foreach(var test in @Model)
+        {
+        <tr>
+            <td>@test.Name 
+                <form method="post" action="/Assign/AddUser">
+                    <input id="assigne" name="assigne" value="" />
+                    <input id="testId" name="testId" value="@test.Id" style="display:none" />
+                    <button type="submit">Добавить</button>
+                </form>
+            </td>
+        </tr>
+        @foreach(var attempt in @test.Attempts)
+        {
+            <tr>
+                <td>@attempt.Assigned @if (@attempt.UserId != null) { <text>(@attempt.User.Surname @attempt.User.Name)</text> }</td>
+            </tr>
+        }
+        }
+    </table>
+</body>
+</html>

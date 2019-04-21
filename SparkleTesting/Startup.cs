@@ -168,6 +168,7 @@ namespace SparkleTesting.API
 
             services.AddScoped<UsersService>();
             services.AddScoped<AttemptsService>();
+            services.AddScoped<TestsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
