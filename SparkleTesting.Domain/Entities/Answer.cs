@@ -68,7 +68,7 @@ namespace SparkleTesting.Domain.Entities
 
         public override bool IsCorrect()
         {
-            return FilledPasses.All(s => s.CorrectAnswers.Select(a => a.Trim().ToLower()).Contains(s.UserAnswer.Trim().ToLower()));
+            return FilledPasses.All(s => s.UserAnswer == null ? throw new Exception($"{nameof(s.UserAnswer)} пуст") :  s.CorrectAnswers.Select(a => a.Trim().ToLower()).Contains(s.UserAnswer.Trim().ToLower()));
         }
     }
 }

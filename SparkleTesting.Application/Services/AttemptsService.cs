@@ -32,7 +32,7 @@ namespace SparkleTesting.Application.Services
             var attempts = QuerryAttempts()
                 .Include(s => s.Test)
                 .Where(s => s.UserId == user.Id || s.Assigned == user.PhoneNumber || s.Assigned == user.Email)
-                .Where(s => !s.StartTime.HasValue);
+                .Where(s => !s.ElapsedTime.HasValue);
 
             return attempts;
         }
@@ -69,22 +69,25 @@ namespace SparkleTesting.Application.Services
 
             var userAttempt = await CreateUserAttempt(attempt);
 
-            foreach (var question in userAttempt.Questions)
+            if (!attempt.StartTime.HasValue) //TODO подумать над логикой
             {
-                switch (question)
+                foreach (var question in userAttempt.Questions)
                 {
-                    case OptionsQuestion optQuestion:
-                        attempt.Answers.Add(new OptionsAnswer(optQuestion));
-                        break;
+                    switch (question)
+                    {
+                        case OptionsQuestion optQuestion:
+                            attempt.Answers.Add(new OptionsAnswer(optQuestion));
+                            break;
 
-                    case PassFillingQuestion passFillQuestion:
-                        attempt.Answers.Add(new PassFillingAnswer(passFillQuestion));
-                        break;
+                        case PassFillingQuestion passFillQuestion:
+                            attempt.Answers.Add(new PassFillingAnswer(passFillQuestion));
+                            break;
+                    }
                 }
-            }
 
-            attempt.MaxTime = attempt.Test.AttemptTime;
-            attempt.StartTime = DateTime.UtcNow;
+                attempt.MaxTime = attempt.Test.AttemptTime;
+                attempt.StartTime = DateTime.UtcNow;
+            }
 
             await _db.SaveChangesAsync();
 
@@ -123,7 +126,7 @@ namespace SparkleTesting.Application.Services
                     case PassFillingAnswer passFillAsnwer:
                         passFillAsnwer.FilledPasses.AsParallel().ForAll(pass =>
                         {
-                            if (answer.Answers.TryGetValue(pass.Id, out var text))
+                            if (answer.Answers.TryGetValue(pass.Id, out var text) && !string.IsNullOrEmpty(text))
                             {
                                 pass.UserAnswer = text;
                             }

@@ -9,15 +9,15 @@ namespace SparkleTesting.Domain.Entities
 
         private string _answerStrings = string.Empty;
         public ICollection<string> CorrectAnswers { get => _answerStrings.Split("/;"); set => _answerStrings = value.ToDelimitedString("/;"); }
-        public string UserAnswer { get; set; }
+        public string UserAnswer { get; set; } = string.Empty;
 
         public int SortOrder { get; set; }
 
         public FilledPass()
         {
-
+            UserAnswer = "";
         }
-        public FilledPass(PassFilling pass)
+        public FilledPass(PassFilling pass) : this()
         {
             CorrectAnswers = pass.CorrectAnswers;
             SortOrder = pass.SortOrder;
